@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z "${1}" ]; then
+	>&2 echo "No file specified"
+	exit 1
+fi
+
+workdir="/tmp"
+tpl_name="${2:-default}"
+
+input_directory=$(dirname "${1}")
+input_filename=$(basename "${1}")
+output_filename="${input_filename%.*}.odp"
+
+input="${workdir}/src/${input_filename}"
+output="${workdir}/out/${output_filename}"
+tpl="${workdir}/templates/${tpl_name}.otp"
+
+docker run -it --rm \
+	-v "$(pwd ${input_directory}):${workdir}/src" \
+	-v "$(pwd):${workdir}/out" \
+	docker-odpdown bash -c "source env/bin/activate && odpdown ${input} ${tpl} ${output}"
+
