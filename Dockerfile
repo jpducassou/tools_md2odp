@@ -18,9 +18,9 @@ RUN apt-get clean \
 
 RUN pip install virtualenv
 RUN virtualenv env
-RUN git clone 'https://github.com/thorstenb/odpdown'
-RUN bash -c "source env/bin/activate && pip install mistune lpod-python pygments pillow lxml"
-RUN bash -c "source env/bin/activate && cd odpdown && python setup.py install"
+RUN bash -c "source env/bin/activate && pip install mistune pygments pillow lxml"
+RUN bash -c "source env/bin/activate && pip install https://github.com/lpod/lpod-python/archive/master.zip"
+RUN bash -c "source env/bin/activate && pip install https://github.com/thorstenb/odpdown/archive/master.zip"
 
 COPY templates/ /tmp/templates/
 
